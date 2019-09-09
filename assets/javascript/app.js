@@ -1,3 +1,5 @@
+$(document).ready(function(){
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // Get all "navbar-burger" elements
@@ -21,5 +23,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
     }
-  
   });
+
+  function getNews(){
+    var queryURL = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/news"
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response){
+      console.log(response);
+    });
+  };
+  function getTeamNews(){
+    var queryURL = "http://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/1"
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response){
+      console.log(response);
+    });
+  };
+
+
+
+  function getPlayerNews(){
+    var queryURL = "https://fantasysports.yahooapis.com/fantasy/v2/player/"
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response){
+      console.log(response)
+    });
+  };
+
+  getNews();
+  getTeamNews();
+  getPlayerNews();
+});
