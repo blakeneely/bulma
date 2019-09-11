@@ -12,12 +12,29 @@
 .hero-p, .hero-button {
     margin-top: 10px;
 }
-.news-container {
+.news-container, 
+.team-container {
     margin-top: 30px;
     margin-bottom: 30px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    border: 1px solid red;
 }
 .card {
     width: 400px;
     margin: 15px;
-    float: left;
+}
+.imgDiv {
+    width: 100px;
+    height: 100x;
+    margin: 2px;
+    border: 1px solid red;
+    display: inline-block;
+    text-align: center;
+}
+.logo {
+    max-width: 100%;
+    height: auto;
 }

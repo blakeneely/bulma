@@ -25,6 +25,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  var nflTeams = [
+    "ARI",
+    "ATL",
+    "baltimore-ravens",
+    "BUF",
+    "CAR",
+    "CHI",
+    "cincinnati-bengals",
+    "cleveland-browns",
+    "DAL",
+    "DEN",
+    "DET",
+    "green-bay-packers",
+    "HOU",
+    "indianapolis-colts",
+    "jacksonville-jaguars",
+    "LAC",
+    "la-rams",
+    "kansascity-chiefs",
+    "MIA",
+    "minnesota-vikings",
+    "newengland-patriots",
+    "neworleans-saints",
+    "ny-giants",
+    "ny-jets",
+    "OAK",
+    "philadelphia-eagles",
+    "pittsburgh-steelers",
+    "SF",
+    "SEA",
+    "tampa-bay-buccanneers",
+    "tennessee-titans",
+    "washington-redskins"
+  ];
+
   function getNews(){
     var queryURL = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/news"
     $.ajax({
@@ -34,8 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(response);
     });
   };
-  function getTeamNews(){
-    var queryURL = "http://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/1"
+  function getMoreNews(){
+    var queryURL = "https://gnews.io/api/v3/search?q=nfl&max=2&token=4a15688cc222a13cfdefce8d01e2b270"
     $.ajax({
       url: queryURL,
       method: "GET"
@@ -43,20 +78,47 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(response);
     });
   };
+  function getTeamInfo(){
+    for(var i = 0; i < nflTeams.length; i++){
+      var queryURL = "http://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/" + nflTeams[i];
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).then(function(response){
+        console.log(response);
+          var imgDiv = $("<div>");
+          imgDiv.addClass("imgDiv");
+          var image = $("<img>");
+          image.attr("src", response.team.logos[0].href);
+          image.attr("id", response.team.abbreviation)
+          image.addClass("logo");
+          var record = $("<p>");
+          record.text(response.team.record.items[0].summary);
+          imgDiv.append(image);
+          imgDiv.append(record);
+          $(".team-container").prepend(imgDiv);
+      });
+    };
+  };
 
-
-
-  function getPlayerNews(){
-    var queryURL = "https://fantasysports.yahooapis.com/fantasy/v2/player/"
+  function getPlayerStats(){
+    var queryURL = "https://api.stattleship.com/football/nfl/player_season_stats?&season_id=nfl-2018-2019&player_id=nfl-drew-brees&interval_type=regularseason"
     $.ajax({
       url: queryURL,
-      method: "GET"
+      type: "GET",
+      dataType: "json",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": "Token token=b67ab79662ba4b9960b58ff82cb5b569",
+        "Accept": "application/vnd.stattleship.com; version=1"
+     }
     }).then(function(response){
-      console.log(response)
+      console.log(response);
     });
   };
 
   getNews();
-  getTeamNews();
-  getPlayerNews();
+  // getMoreNews();     Don't use this until we need it, we are limited to 100 calls per 24 hours
+  getTeamInfo();
+  getPlayerStats();
 });
