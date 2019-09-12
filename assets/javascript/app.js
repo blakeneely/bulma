@@ -85,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
         url: queryURL,
         method: "GET"
       }).then(function(response){
-        console.log(response);
           var imgDiv = $("<div>");
           imgDiv.addClass("imgDiv");
           var image = $("<img>");
@@ -99,6 +98,21 @@ document.addEventListener('DOMContentLoaded', () => {
           $(".team-container").prepend(imgDiv);
       });
     };
+  };
+
+  function getStats(){
+    var queryURL = "https://api.mysportsfeeds.com/v1.1/pull/nfl/2019-regular/cumulative_player_stats.json"
+    $.ajax({
+      url: queryURL,
+      type: "GET",
+      // dataType: "json",
+      headers: { 
+        // "Content-Type": "application/json",
+        "Authorization": "Basic a437f7dc-b82f-4f70-8989-798c15" + ":" + "Classwork12"
+     }
+    }).then(function(response){
+      console.log(response);
+    });
   };
 
   function getPlayerStats(){
@@ -120,5 +134,5 @@ document.addEventListener('DOMContentLoaded', () => {
   getNews();
   // getMoreNews();     Don't use this until we need it, we are limited to 100 calls per 24 hours
   getTeamInfo();
-  getPlayerStats();
+  getStats();
 });
