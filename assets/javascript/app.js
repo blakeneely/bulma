@@ -101,14 +101,13 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   function getStats(){
-    var queryURL = "https://api.mysportsfeeds.com/v1.1/pull/nfl/2019-regular/cumulative_player_stats.json"
+    var queryURL = "https://api.mysportsfeeds.com/v1.1/pull/nfl/2019-regular/cumulative_player_stats.json?&player=drew-brees"
     $.ajax({
       url: queryURL,
       type: "GET",
-      // dataType: "json",
+      dataType: "json",
       headers: { 
-        // "Content-Type": "application/json",
-        "Authorization": "Basic a437f7dc-b82f-4f70-8989-798c15" + ":" + "Classwork12"
+        "Authorization": "Basic " + btoa("a437f7dc-b82f-4f70-8989-798c15" + ":" + "Classwork12")
      }
     }).then(function(response){
       console.log(response);
